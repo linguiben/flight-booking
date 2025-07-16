@@ -1,0 +1,30 @@
+{
+    "mcpServers": {
+        "mcp-server-weather": {
+            "command": "/Users/jupiter/11.java/jdk-17.0.10.jdk/Contents/Home/bin/java",
+            "args": [
+                "-Dspring.ai.mcp.server.stdio=true",
+                "-Dlogging.pattern.console=",
+                "-jar",
+                "/Users/jupiter/14.idea-workspace/flight-booking/mcp-server-stdio/target/mcp-server-stdio-1.0.jar"
+            ]
+        },
+        "mcp-server-postgres": {
+            "command": "/Users/jupiter/15.node-wkspc/multi-mcp/node_modules/.bin/mcp-server-postgres",
+            "args": [
+                "postgresql://user:pass@ip:port/postgres"
+            ]
+        },
+        "mcp-server-baidu-map": {
+            "command": "/Users/jupiter/15.node-wkspc/multi-mcp/node_modules/.bin/mcp-server-baidu-map",
+            "args": [""],
+            "env": {
+                "BAIDU_MAP_API_KEY": "input yor api key here"
+            }
+        },
+        "filesystem": {
+            "command": "/Users/jupiter/15.node-wkspc/multi-mcp/node_modules/.bin/mcp-server-filesystem",
+            "args": ["/Users/jupiter/tmp"]
+        }
+    }
+}
