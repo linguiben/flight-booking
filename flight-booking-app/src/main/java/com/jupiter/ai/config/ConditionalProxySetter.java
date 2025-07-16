@@ -16,6 +16,14 @@ public class ConditionalProxySetter implements BeanPostProcessor {
     private static final Logger log = LoggerFactory.getLogger(ConditionalProxySetter.class);
     private boolean proxySet = false;
 
+    /**
+     * @desc Post-process the given bean after its initialization.
+     * @param bean
+     * @param beanName
+     * @return Object
+     * @throws BeansException
+     * @author Jupiter.Lin
+     * @date 2025/7/16     */
     public Object postProcessAfterInitialization(Object bean, String beanName) throws BeansException {
         if (bean instanceof OpenAiChatModel && !this.proxySet) {
             System.setProperty("http.proxyHost", "localhost");
