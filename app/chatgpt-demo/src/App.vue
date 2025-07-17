@@ -132,7 +132,7 @@ export default {
   setup() {
     const activities = ref([
       {
-        content: '⭐欢迎来到图灵航空✈！请问有什么可以帮您的?',
+        content: '⭐我是智能小助手✈！请问有什么可以帮您的?',
         timestamp: new Date().toLocaleDateString() + " " + new Date().toLocaleTimeString(),
         color: '#0bbd87',
       },

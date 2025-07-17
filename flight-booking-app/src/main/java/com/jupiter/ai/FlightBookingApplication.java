@@ -22,16 +22,16 @@ public class FlightBookingApplication {
         SpringApplication.run(FlightBookingApplication.class, args);
     }
 
-    @Bean
-    CommandLineRunner ingestTermOfServiceToVectorStore( VectorStore vectorStore,
-                                                       @Value("classpath:rag/terms-of-service.txt") Resource termsOfServiceDocs) {
-
-        return args -> {
-            vectorStore.write(                                  // 3.向量化+写入向量数据库
-                    new TokenTextSplitter().split(          // 2.分隔
-                    new TextReader(termsOfServiceDocs).read())  // 1.读取文本
-            );
-        };
-    }
+//    @Bean
+//    CommandLineRunner ingestTermOfServiceToVectorStore( VectorStore vectorStore,
+//                                                       @Value("classpath:rag/terms-of-service.txt") Resource termsOfServiceDocs) {
+//
+//        return args -> {
+//            vectorStore.write(                                  // 3.向量化+写入向量数据库
+//                    new TokenTextSplitter().split(          // 2.分隔
+//                    new TextReader(termsOfServiceDocs).read())  // 1.读取文本
+//            );
+//        };
+//    }
 
 }

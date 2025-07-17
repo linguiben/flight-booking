@@ -93,7 +93,7 @@
     若是additivity设为false，则子Logger只会在自己的appender里输出，而不会在父Logger的appender里输出。-->
     <logger name="org.springframework" level="INFO" additivity="false">
         <appender-ref ref="Console"/>
-        <appender-ref ref="RollingFileInfo"/>
+<!--        <appender-ref ref="RollingFileInfo"/>-->
     </logger>
     <logger name="org.mybatis" level="INFO"></logger>
     <Logger name="org.apache.catalina" level="info"/>
@@ -110,9 +110,9 @@
     <springProfile name="pro">
         <root level="INFO">
             <appender-ref ref="Console"/>
-            <appender-ref ref="RollingFileInfo"/>
-            <appender-ref ref="RollingFileWarn"/>
-            <appender-ref ref="RollingFileError"/>
+<!--            <appender-ref ref="RollingFileInfo"/>-->
+<!--            <appender-ref ref="RollingFileWarn"/>-->
+<!--            <appender-ref ref="RollingFileError"/>-->
         </root>
     </springProfile>
 </configuration>

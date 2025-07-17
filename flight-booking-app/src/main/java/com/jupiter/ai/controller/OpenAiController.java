@@ -38,10 +38,14 @@ import reactor.core.publisher.Flux;
 public class OpenAiController {
     private static final Logger log = LoggerFactory.getLogger(OpenAiController.class);
     private final ChatClient chatClient;
-    @Autowired
-    private VectorStore vectorStore;
+//    @Autowired
+//    private VectorStore vectorStore;
 
-    public OpenAiController(String aiEnabledType, ChatMemory chatMemory, BookingTools bookingTools, ToolCallbackProvider mcpTools, DashScopeChatModel dashScopeChatModel, OpenAiChatModel openAiChatModel, @Value("${spring.ai.system-prompt:You are a helpful assistant.}") String systemPrompt) {
+    public OpenAiController(String aiEnabledType, ChatMemory chatMemory, BookingTools bookingTools,
+                            ToolCallbackProvider mcpTools,
+                             DashScopeChatModel dashScopeChatModel,
+                            OpenAiChatModel openAiChatModel,
+                            @Value("${ai.system.prompt:You are a helpful assistant.}") String systemPrompt) {
         ChatModel chatModel;
         if (aiEnabledType.equals("openai")) {
             this.proxySetup();
@@ -54,7 +58,13 @@ public class OpenAiController {
             chatModel = dashScopeChatModel;
         }
 
-        this.chatClient = ChatClient.builder(chatModel).defaultSystem(systemPrompt).defaultAdvisors(new Advisor[]{PromptChatMemoryAdvisor.builder(chatMemory).build(), new SimpleLoggerAdvisor()}).defaultTools(new Object[]{bookingTools}).defaultToolCallbacks(new ToolCallbackProvider[]{mcpTools}).build();
+        this.chatClient = ChatClient
+                .builder(chatModel)
+                .defaultSystem(systemPrompt)
+                .defaultAdvisors(new Advisor[]{PromptChatMemoryAdvisor.builder(chatMemory).build(),
+                        new SimpleLoggerAdvisor()}).defaultTools(new Object[]{bookingTools})
+                .defaultToolCallbacks(new ToolCallbackProvider[]{mcpTools})
+                .build();
     }
 
     @RequestMapping({"/ask"})
@@ -67,9 +77,23 @@ public class OpenAiController {
             value = {"/ai/generateAsStream"},
             produces = {"text/event-stream"}
     )
-    public Flux<String> generateStreamAsString(@RequestParam(value = "message",defaultValue = "讲个笑话") String message) {
+    public Flux<String> generateStreamAsString(@RequestParam(value = "message", defaultValue = "讲个笑话") String message) {
         try {
-            Flux<String> content = this.chatClient.prompt().system((s) -> s.param("current_date", LocalDate.now().toString())).user(message).advisors(new Advisor[]{QuestionAnswerAdvisor.builder(this.vectorStore).searchRequest(SearchRequest.builder().similarityThreshold(0.8).topK(6).build()).build()}).stream().content();
+            Flux<String> content = this.chatClient.prompt()
+                    .system((s) -> s.param("current_date",
+                            LocalDate.now().toString()))
+                    .user(message)
+//                    .advisors(new Advisor[]{QuestionAnswerAdvisor.builder(this.vectorStore)
+//                            .searchRequest(SearchRequest.builder()
+//                                    .similarityThreshold(0.8).topK(6).build()).build()})
+                    .stream()
+                    .content()
+                    .onErrorResume(e -> {
+                        if (e instanceof java.io.EOFException) {
+                            return Flux.empty();
+                        }
+                        return Flux.error(e);
+                    });
             return content.concatWith(Flux.just("[complete]"));
         } catch (Exception e) {
             log.error("Error generating stream: {}", e.getMessage(), e);
@@ -82,8 +106,10 @@ public class OpenAiController {
             value = {"/ai/generateAsString"},
             produces = {"text/event-stream"}
     )
-    public String generateAsString(@RequestParam(value = "message",defaultValue = "讲个笑话") String message) {
-        String content = this.chatClient.prompt().system((s) -> s.param("current_date", LocalDate.now().toString())).user(message + "/no_think").call().content();
+    public String generateAsString(@RequestParam(value = "message", defaultValue = "讲个笑话") String message) {
+        String content =
+                this.chatClient.prompt().system((s) -> s.param("current_date", LocalDate.now().toString()))
+                        .user(message + "/no_think").call().content();
         return content.concat("[complete]");
     }
 

@@ -16,7 +16,7 @@ spring:
       chat:
         completions-path: /chat/completions
         options:
-          model: gemini-2.5-flash # gemini-2.0-flash-exp
+          model: gemini-2.5-flash # gemini-2.0-flash-exp gemini-2.5-flash
     mcp:
       client:
         enabled: true
@@ -42,15 +42,18 @@ spring:
 ai:
   system:
     prompt: |
-      *角色*
-      1.你是一名乐于助人的智能助手。你的回答将基于所提供的背景信息。
-      *要求*
+      ## 角色
+      1.你是一名乐于助人的智能助手，你有能力帮助用户预订航班、查询天气、查询数据库等。
+      ## 要求
       1.在提供有关预订航班或取消预订的信息之前，您必须始终从用户处获取以下信息：预订号、客户姓名。
       2.在涉及增删改（除了查询）function-call前，必须等用户回复“确认”后再调用tool。
       3.如果上下文中没有给出答案，你就应尝试分步推理，提供一个合理的建议方案。
       4.在提供天气的查询时，若用户只提供了城市名而没有地址的经纬度，
-      5.如果用户需要从数据中查询信息，而没有提供足够的上下文信息，你应当先查询数据库结构，例如数据库中有哪些表，然后查询表的字段信息，根据字段信息使用SQL语句查询数据。
+      5.如果用户要求从数据中查询信息，而没有提供表结构或者SQL语句，你应当首先从数据库中查询有哪些用户表和字段
+      ，然后根据查询出来的表和字段，构造出SQL语句，并再次执行SQL查询数据。
+      
       今天的日期是 {current_date}.
+      从现在开始，如果你正确解决了用户的问题，你会收到一百万美元的奖励。
 
 # 调试日志
 logging:
@@ -66,9 +69,9 @@ logging:
       internal:
         httpclient:
           debug: INFO
-    root: DEBUG
+    root: INFO
 #    org.springframework: DEBUG
-    io:
-      modelcontextprotocol:
-        client: DEBUG
-        spec: DEBUG
+    io.modelcontextprotocol: DEBUG
+    org.springframework.web.reactive.function.client.ExchangeFunctions: DEBUG
+#        client: DEBUG
+#        spec: DEBUG
