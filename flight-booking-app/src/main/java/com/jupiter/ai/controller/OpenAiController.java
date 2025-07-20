@@ -38,8 +38,9 @@ import reactor.core.publisher.Flux;
 public class OpenAiController {
     private static final Logger log = LoggerFactory.getLogger(OpenAiController.class);
     private final ChatClient chatClient;
-//    @Autowired
-//    private VectorStore vectorStore;
+
+    @Autowired
+    private VectorStore vectorStore;
 
     public OpenAiController(String aiEnabledType, ChatMemory chatMemory, BookingTools bookingTools,
                             ToolCallbackProvider mcpTools,
@@ -61,9 +62,10 @@ public class OpenAiController {
         this.chatClient = ChatClient
                 .builder(chatModel)
                 .defaultSystem(systemPrompt)
-                .defaultAdvisors(new Advisor[]{PromptChatMemoryAdvisor.builder(chatMemory).build(),
-                        new SimpleLoggerAdvisor()}).defaultTools(new Object[]{bookingTools})
-                .defaultToolCallbacks(new ToolCallbackProvider[]{mcpTools})
+                .defaultAdvisors(PromptChatMemoryAdvisor.builder(chatMemory).build(),
+                        new SimpleLoggerAdvisor())
+                .defaultTools(bookingTools)
+                .defaultToolCallbacks(mcpTools)
                 .build();
     }
 
@@ -80,8 +82,7 @@ public class OpenAiController {
     public Flux<String> generateStreamAsString(@RequestParam(value = "message", defaultValue = "讲个笑话") String message) {
         try {
             Flux<String> content = this.chatClient.prompt()
-                    .system((s) -> s.param("current_date",
-                            LocalDate.now().toString()))
+                    .system((s) -> s.param("current_date", LocalDate.now().toString()))
                     .user(message)
 //                    .advisors(new Advisor[]{QuestionAnswerAdvisor.builder(this.vectorStore)
 //                            .searchRequest(SearchRequest.builder()

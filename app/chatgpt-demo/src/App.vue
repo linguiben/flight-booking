@@ -71,7 +71,7 @@
     </el-col>
 
     <el-col  :span="span1" :class="[span1 != '8' ? 'span1' : 'span1']" style="background-color: aliceblue;">
-      <div style="height: 860px;overflow: scroll">
+      <div style="height: 560px;overflow: scroll">
         <el-timeline style="max-width: 100%">
           <el-timeline-item
               v-for="(activity, index) in activities"
