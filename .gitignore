@@ -37,3 +37,4 @@ build/
 ### VS Code ###
 .vscode/
 node_modules/
+mcp-servers-config-local.json

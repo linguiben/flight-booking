@@ -14,7 +14,8 @@
 
 
 ## 功能介绍
-![img.png](data/assets/intro1.png)
+![intro1](data/assets/intro1.png)  
+![intro1](data/assets/intro2.png)
 ---  
 ---  
 
