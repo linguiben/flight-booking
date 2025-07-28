@@ -2,11 +2,13 @@
 
 本项目参考了[*spring-ai-examples*][1]，[*mcp For Client Developers*][5] 和 [*Google Cloud and Spring AI 1.0*][6]，此外，感谢 **徐庶** 老师的[分享][4]。
 
-## 项目前提
+## 项目准备
 1. 申请[*阿里百炼key*][2]  
 2. 申请[*Google Gemini key*][3]
 3. 申请[*百度地图AK*][7]
-4. 获取天气使用OpenMeteo的免费API，无需密钥
+4. 下载[*mcp-PostgreSQL*][9]
+5. 下载[*mcp-filesystem*][10]
+6. 获取天气使用OpenMeteo的免费API，无需密钥
 
 ## 项目结构
 > fight-booking     // 4. 后端，Spring Boot应用  
@@ -31,3 +33,5 @@
 [6]: https://cloud.google.com/blog/topics/developers-practitioners/google-cloud-and-spring-ai-10
 [7]: https://lbs.baidu.com/faq/api?title=mcpserver/base
 [8]: https://github.com/baidu-maps/mcp
+[9]: https://github.com/modelcontextprotocol/servers-archived/tree/main/src/postgres
+[10]: https://github.com/modelcontextprotocol/servers/tree/main/src/filesystem
