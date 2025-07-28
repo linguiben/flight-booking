@@ -5,6 +5,8 @@
 ## 项目前提
 1. 申请[*阿里百炼key*][2]  
 2. 申请[*Google Gemini key*][3]
+3. 申请[*百度地图AK*][7]
+4. 获取天气使用OpenMeteo的免费API，无需密钥
 
 ## 项目结构
 > fight-booking     // 4. 后端，Spring Boot应用  
@@ -16,6 +18,7 @@
 ## 功能介绍
 ![intro1](data/assets/intro1.png)  
 ![intro1](data/assets/intro2.png)
+![img.png](data/assets/intro3.png)
 ---  
 ---  
 
@@ -26,3 +29,5 @@
 [4]: https://www.yuque.com/geren-t8lyq/ncgl94/gwvu33ofgbrciqtb?singleDoc=
 [5]: https://modelcontextprotocol.io/quickstart/client#java
 [6]: https://cloud.google.com/blog/topics/developers-practitioners/google-cloud-and-spring-ai-10
+[7]: https://lbs.baidu.com/faq/api?title=mcpserver/base
+[8]: https://github.com/baidu-maps/mcp

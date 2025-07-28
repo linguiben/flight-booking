@@ -18,3 +18,6 @@ insert into public.market_daily_performance (data_date, index_code, index_name, 
 ('2025-07-10', 'STI',  'Straits Times',   3310.4400,  12.8700,  0.39),
 ('2025-07-10', 'KOSPI','KOSPI',           2763.5500, -21.5700, -0.78);
 select * from public.market_daily_performance;
+
+-- 其他SQL (ruoyi-Vue3-PostgreSQL):
+-- https://github.com/libin9iOak/ruoyi-Vue3-PostgreSQL/blob/main/sql/%E7%AC%AC%E4%B8%80%E6%AD%A5-postgresql.sql
